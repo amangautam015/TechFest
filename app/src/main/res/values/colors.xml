@@ -7,4 +7,5 @@
     <color name="album_title">#fff</color>
     <color name="primary_text">#fff</color>
     <color name="colorPrimaryDark_1">#FF212A33</color>
+    <color name="colorBack">#FFF</color>
 </resources>

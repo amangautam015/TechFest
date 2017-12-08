@@ -11,16 +11,19 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.BottomSheetBehavior;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.NavUtils;
 import android.support.v4.content.Loader;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
 
@@ -43,16 +46,14 @@ public class BlankFragment extends Fragment implements LoaderCallbacks<List<Item
     public static final String ARG_PAGE = "ARG_PAGE";
     public static final String TITLE = "ARG_TITLE";
 
-
-    ArrayList<Item> item  =  new ArrayList<Item>();
-
-
+    LinearLayout emptyView;
+    ArrayList<Item> item = new ArrayList<Item>();
 
 
-    public static BlankFragment newInstance(int page,String title) {
+    public static BlankFragment newInstance(int page, String title) {
         Bundle args = new Bundle();
         args.putInt(ARG_PAGE, page);
-        args.putString(TITLE,title);
+        args.putString(TITLE, title);
 
         BlankFragment fragment = new BlankFragment();
         fragment.setArguments(args);
@@ -78,57 +79,8 @@ public class BlankFragment extends Fragment implements LoaderCallbacks<List<Item
                              Bundle savedInstanceState) {
 
 
-//        final String[] super_events = new String[]{"competitions","technoholix","ideate","workshops","initiatives","ozone","summit","lectures","exhibitions","World_Mun","cyclothon","sponsers"};
-
-
-//        final FirebaseDatabase database = FirebaseDatabase.getInstance();
-//
-//        DatabaseReference myRef = database.getReference();
-//
-//        myRef.addValueEventListener(new ValueEventListener() {
-//            @Override
-//            public void onDataChange(DataSnapshot dataSnapshot) {
-//                // This method is called once with the initial value and again
-//
-//
-//                String value;
-//                for  (DataSnapshot postSnap : dataSnapshot.child(super_events[mPage-1]).getChildren()) {
-//
-//                    value = postSnap.child("name").getValue(String.class);
-//                    name.add(value);
-//
-//                    value = postSnap.child("link").getValue(String.class);
-//                    link.add(value);
-//
-//                    value = postSnap.child("imglink").getValue(String.class);
-//                    imglink.add(value);
-//
-//                    value = postSnap.child("intro").getValue(String.class);
-//                    intro.add(value);
-//
-//                    value = postSnap.child("time").getValue(String.class);
-//                    time.add(value);
-//
-//
-//
-//
-//                }
-//
-//            //   Log.d(TAG, "Value is: " + kvalue.get(0));
-//
-//            }
-//
-//            @Override
-//            public void onCancelled(DatabaseError error) {
-//                // Failed to read value
-//                Log.w(TAG, "Failed to read value.", error.toException());
-//            }
-//        });
-
-
-
-        final View rootView = inflater.inflate(R.layout.activity_event,container,false);
-
+        final View rootView = inflater.inflate(R.layout.activity_event, container, false);
+        emptyView = (LinearLayout) rootView.findViewById(R.id.empty_state);
         final View bottomSheet = rootView.findViewById(R.id.design_bottom_sheet);
         final BottomSheetBehavior behavior = BottomSheetBehavior.from(bottomSheet);
         behavior.setPeekHeight(0);
@@ -163,19 +115,16 @@ public class BlankFragment extends Fragment implements LoaderCallbacks<List<Item
 //        });
 
 
-
-
         Toolbar toolbar = (Toolbar) rootView.findViewById(R.id.toolbar);
-        ((AppCompatActivity)getActivity()).setSupportActionBar(toolbar);
+        ((AppCompatActivity) getActivity()).setSupportActionBar(toolbar);
 
-        ((AppCompatActivity)getActivity()).getSupportActionBar().setTitle(Title);
-
+        ((AppCompatActivity) getActivity()).getSupportActionBar().setTitle(Title);
 
 
         // item.add(new Item("Opera Hat","https://techfest.org/img/workshop/nvidia.jpg","23:00 | LH101"));
         // item.add(new Item("Gamers","https://techfest.org/img/workshop/9.jpg","17:00 | SOM WELL"));
         // item.add(new Item("Android","https://techfest.org/img/workshop/14G.jpg","02:30 | LA201"));
-        adapter = new ItemAdapter( getActivity() , item);
+        adapter = new ItemAdapter(getActivity(), item);
         ListView lv = (ListView) rootView.findViewById(R.id.list);
         lv.setAdapter(adapter);
         lv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -183,7 +132,7 @@ public class BlankFragment extends Fragment implements LoaderCallbacks<List<Item
             public void onItemClick(AdapterView<?> adapterView, View view, final int i, final long l) {
                 final Item currentItem = adapter.getItem(i);
 
-                String event_name= currentItem.getEvent_name();
+                String event_name = currentItem.getEvent_name();
                 //  String description = getString(R.string.sample_description);
                 //   final String link = "https://www.techfest.org";
 
@@ -222,7 +171,13 @@ public class BlankFragment extends Fragment implements LoaderCallbacks<List<Item
             }
 
         });
-
+        TextView no_net = (TextView) rootView.findViewById(R.id.no_net);
+        no_net.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+               getActivity().finish();
+            }
+        });
         ImageView close = (ImageView) rootView.findViewById(R.id.kclose);
         close.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -232,7 +187,7 @@ public class BlankFragment extends Fragment implements LoaderCallbacks<List<Item
         });
         ConnectivityManager connMgr = (ConnectivityManager)
                 getActivity().getSystemService(Context.CONNECTIVITY_SERVICE);
-        getLoaderManager().initLoader(1,null, this);
+        getLoaderManager().initLoader(1, null, this);
         return rootView;
 
     }
@@ -240,7 +195,7 @@ public class BlankFragment extends Fragment implements LoaderCallbacks<List<Item
 
     @Override
     public Loader<List<Item>> onCreateLoader(int id, Bundle args) {
-        return new ItemLoader(getActivity(),mPage);
+        return new ItemLoader(getActivity(), mPage);
     }
 
     @Override
@@ -250,16 +205,20 @@ public class BlankFragment extends Fragment implements LoaderCallbacks<List<Item
         // Ifl there is a valid list of {@link news}s, then add them to the adapter's
         // data set. This will trigger the ListView to update.
 
-        if (data != null && !data.isEmpty())
+        if (data != null && !data.isEmpty()) {
+            emptyView.setVisibility(View.GONE);
             adapter.addAll(data);
-
+        }
 
 
     }
+
 
     @Override
     public void onLoaderReset(Loader<List<Item>> loader) {
         adapter.clear();
     }
-}
 
+
+
+}

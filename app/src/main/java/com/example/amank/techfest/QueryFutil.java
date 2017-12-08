@@ -32,7 +32,7 @@ public class QueryFutil {
         List<String> introk = new ArrayList<>();
         List<String> timek = new ArrayList<>();
 
-        if ( EventActivity.Data_super.loff != null) {
+        if (  EventActivity.Data_super.loff.size()>0) {
             namek = EventActivity.Data_super.loff.get(mPage - 1).getMName();
             linkk = EventActivity.Data_super.loff.get(mPage - 1).getLink();
 
