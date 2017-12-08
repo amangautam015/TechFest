@@ -162,7 +162,7 @@ public class BlankFragment extends Fragment implements LoaderCallbacks<List<Item
                         // Create a new intent to view the news URI
                         Intent websiteIntent = new Intent(Intent.ACTION_VIEW, tt);
 
-                        // Send the intent to launch a new activity
+                        // Send the intent to launch a new activity.
                         startActivity(websiteIntent);
                     }
                 });
