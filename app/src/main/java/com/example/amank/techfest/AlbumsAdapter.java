@@ -57,7 +57,7 @@ public class AlbumsAdapter extends RecyclerView.Adapter<AlbumsAdapter.MyViewHold
     public void onBindViewHolder(final MyViewHolder holder, int position) {
         Album album = albumList.get(position);
         holder.title.setText(album.getName());
-        holder.count.setText("-----------");
+        holder.count.setText("-------------------");
 
         // loading album covern using Glide library
         Glide.with(mContext).load(album.getThumbnail()).override(200,300).into(holder.thumbnail);

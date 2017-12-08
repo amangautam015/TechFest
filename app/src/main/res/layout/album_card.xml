@@ -9,12 +9,12 @@
         android:layout_height="match_parent"
         android:layout_gravity="center"
         android:layout_margin="@dimen/card_margin"
-        android:elevation="3dp"
+        android:elevation="10dp"
         card_view:cardCornerRadius="@dimen/card_album_radius">
 
         <RelativeLayout
             android:layout_width="match_parent"
-            android:background="#757575"
+            android:background="@color/viewBg"
             android:layout_height="match_parent">
 
             <ImageView
@@ -40,6 +40,7 @@
 
             <TextView
                 android:id="@+id/count"
+                android:textColor="#fff"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_below="@id/title"
