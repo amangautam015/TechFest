@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    android:layout_height="match_parent"
+    android:layout_width="match_parent"
+    android:paddingLeft="10dp"
+    android:paddingRight="10dp"
+    android:paddingTop="10dp"
+    android:background="#646161"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    >
+    <LinearLayout
+        android:id="@+id/main_view"
+        android:layout_width="match_parent"
+        android:layout_height="150dp"
+        android:orientation="vertical"
+
+
+        android:background="@drawable/shape"
+
+        >
+
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="#33000000"
+            android:padding="10dp"
+
+            >
+            <TextView
+                android:id="@+id/tv1"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+
+                android:text="ROBO WORS"
+                android:textAllCaps="true"
+                android:textSize="13sp"
+                android:textColor="#fff"
+
+                />
+
+            <TextView
+
+                android:textAllCaps="true"
+                android:textSize="13sp"
+                android:id="@+id/tv2"
+                android:text="23:00 LH101"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+
+                android:textColor="#fff"
+                />
+
+
+        </LinearLayout>
+
+
+    </LinearLayout>
+</RelativeLayout>
